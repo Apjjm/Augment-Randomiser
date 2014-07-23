@@ -1,0 +1,141 @@
+#format -  <upgrade> | <cost>  | <requires1>, <requires2> ... | <Real Name>
+#* = root upgrade
+
+
+##################################
+##CRANIUM
+##################################
+capture		|0|	*               | Hacking: Capture
+capture1	|0|	capture         | Capture 1
+cameradom	|0|	capture         | Camera Domination
+capture2	|1|	capture1        | Capture 2
+capture3	|1|	capture2        | Capture 3
+capture4	|1|	capture3        | Capture 4
+capture5	|1|	capture4        | Capture 5
+turretdom	|1|	cameradom       | Turret Domination
+robotdom	|1|	turretdom       | Robot Domination
+
+analyse		|0|	*               | Hacking: Analyse
+detectiona      |0|     analyse         | Detection Feedback
+datastore	|1|	analyse         | Analyse All Datastores
+
+fortify         |0|     *               | Hacking: Fortify
+fortify1        |0|     fortify         | Fortify 1
+fortify2        |1|     fortify1        | Fortify 2
+fortify3        |1|     fortify2        | Fortify 3
+
+hstealth        |0|     *               | Hacking: Stealth
+hstealth1       |0|     hstealth        | Stealth 1
+hstealth2       |1|     hstealth1       | Stealth 2
+hstealth3       |1|     hstealth2       | Stealth 3
+
+radar		|0|	*               | Wayfinder Radar System
+radar1		|0|	radar           | Radar 1
+radar2		|1|	radar1          | Radar 2
+
+infolink	|0|	*               | Infolink
+cochlear	|0|	infolink        | Cochlear Implant
+subvocal	|0|	infolink        | Subvocal Communication Implant
+
+social		|2|	*               | Social Enhancer
+emointel	|0|	social          | Emotional Intelligence Enhancer
+
+stealthe	|2|	*               | Stealth Enhancer
+noise		|0|	stealthe        | Noise Feedback
+cones		|1|	stealthe        | Cones of Vision
+location	|1|	noise           | Last Known Location Marker
+marktrack1	|1|	noise           | Mark and Track 1.0
+marktrack2	|1|	marktrack1      | Mark and Track 2.0
+marktrack3	|1|	marktrack2      | Mark and Track 3.0
+
+##################################
+##EYES
+##################################
+
+smartvis	|2|	*               | Smart Vision
+wallhacks	|0|	smartvis        | Wall-Penetrating Imager
+
+retinal		|0|	*               | Retinal Prosthesis
+retinalhud	|0|	retinal         | Retinal HUD
+flash		|1|	retinalhud      | Flash Suppressant
+cooldown	|1|	retinalhud      | Cooldown Timer
+
+##################################
+##ARMS
+##################################
+
+arms		|0|	*               | Cybernetic Arm Prosthesis
+takedown	|0|	arms            | Instant Take-Down
+wallpunch	|1|	takedown        | Punch Through Wall
+heavycarry	|1|	takedown        | Move/Throw Heavy Objects
+recoil1		|1|	wallpunch,heavycarry | Recoil Compensation 1
+recoil2		|1|	recoil1         | Recoil Compensation 2
+carry1		|1|	takedown        | Carrying Capacity 1
+carry2		|1|	carry1          | Carrying Capacity 2
+carry3		|1|	carry2          | Carrying Capacity 3
+
+stabilizer	|2|	*               | Aim Stabilizer
+aimcontrol1	|0|	stabilizer      | Aiming Motion Control 1
+aimcontrol2	|0|	aimcontrol1     | Aiming Motion Control 2
+
+##################################
+##TORSO
+##################################
+
+health		|0|	*               | Sentinel RX Health System
+defib		|0|	health          | Cardiovertor Defibrillator
+proteins	|0|	health          | Angiogenesis Protein Therapy
+
+rebreather	|2|	*               | Implanted Rebreather
+chemresist	|0|	rebreather      | Chemical Resistance
+lungs1		|1|	rebreather      | Hyper-Oxygenation 1
+lungs2		|1|	lungs1          | Hyper-Oxygenation 2
+
+energy		|0|	*               | Sarif Series 8 Energy Converter
+energylvl0	|0|	energy          | Base Energy Level
+energyrch0	|0|	energy          | Base Recharge Rate
+energylvl1	|1|	energylvl0      | Energy Level Upgrade 1
+energylvl2	|1|     energylvl1      | Energy Level Upgrade 2
+energylvl3	|1|     energylvl2      | Energy Level Upgrade 3
+energyrch1	|1|	energyrch0      | Recharge Rate Upgrade 1
+energyrch2	|2|	energyrch1      | Recharge Rate Upgrade 2
+
+typhoon		|2|	*               | Typhoon Explosive System
+typhoon1	|0|     typhoon         | Light Damage Variant
+typhoon2	|1|     typhoon1        | Heavy Damage Variant
+
+##################################
+##BACK
+##################################
+
+icarus		|2|	*               | Icarus Landing System
+icarusvel	|0|	icarus          | Descent Velocity Modulator
+
+reflex		|2|	*               | Quicksilver Reflex Booster
+multitd		|0|	reflex          | Multiple Take-Down
+
+##################################
+##SKIN
+##################################
+
+cloak		|2|	*               | Glass-Shield Cloaking System
+cloak1		|0|	cloak           | Base Longevity
+cloak2		|1|	cloak1          | Longevity Upgrade 1
+cloak3		|1|	cloak2          | Longevity Upgrade 2
+
+armor		|2|	*               | Dermal Armor
+armor1		|0|	armor           | Damage Reduction 1
+armor2		|1|	armor1          | Damage Reduction 2
+armor3		|1|	armor2          | Damage Reduction 3
+armoremp	|1|	armor2          | EMP Shielding
+
+##################################
+##LEGS
+##################################
+
+legs		|2|	*               | Cybernetic Leg Prosthesis
+highjump	|0|	legs            | Jump Enhancement
+sprint		|1|	legs            | Sprint Enhancement
+silentrun	|1|	legs            | Run Silently
+silentdash	|1|	silentrun       | Sprint Silently
+silentjump	|1|	silentdash      | Jump/Land Silently
