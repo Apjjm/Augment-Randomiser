@@ -6,26 +6,40 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+
 
 namespace AugmentRandomiser
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
+
         Random random;
+        KeyMappingController mappings;
         AugmentSession session;
         Augment currentAugment;
 
-        public Form1()
+        public MainForm()
         {
+            this.Region = new Region();
             InitializeComponent();
             session = new AugmentSession();
             currentAugment = Augment.getRoot();
             random = new Random();
+            mappings = new KeyMappingController();
+            mappings.addActionMapping("NextAug", giveAug_Click);
+            mappings.addActionMapping("ResetAugs", resetToolStripMenuItem_Click);
+            mappings.addActionMapping("ExpandAugs", expandToolStripMenuItem_Click);
+            mappings.addActionMapping("CollapsAugs", collapseToolStripMenuItem_Click);
+            mappings.addActionMapping("SetSeed", setSeedToolStripMenuItem_Click);
+            mappings.addActionMapping("Cheat", giveAugToolStripMenuItem_Click);
+            mappings.addActionMapping("ToggleTopmost",evToggleTopmost);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             session.loadAugments("upgrades.txt");
+            mappings.addKeyActionPairsFromFile("keys.txt");
             session.resetOwnedAugments();
             session.updateAugmentLists();
             selectRandomAug();
@@ -33,6 +47,7 @@ namespace AugmentRandomiser
             updateTreeView();
             updateButton();
             if (lvAugs.Nodes.Count > 0) lvAugs.Nodes[0].EnsureVisible();
+            keysUpdate.Start();
         }
 
         private void seedRNG(int seed)
@@ -67,6 +82,8 @@ namespace AugmentRandomiser
                 giveAug.Text = "No Augments Remaining";
             else
                 giveAug.Text = currentAugment.fullName + " (" + currentAugment.praxisCost + ")";
+
+            this.Invalidate();
         }
 
         private void ensureVisibleAugment(Augment augment)
@@ -79,7 +96,7 @@ namespace AugmentRandomiser
 
         private void ensureVisibleAugment_Recurse(TreeNode root, Augment augment)
         {
-            if (root.Tag == augment)
+            if ((Augment)root.Tag == augment)
             {
                 root.EnsureVisible();
                 root.BackColor = Color.Gray;
@@ -181,7 +198,7 @@ namespace AugmentRandomiser
 
         private void setSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EntryBox box = new EntryBox();
+            EntryBox box = new EntryBox(this);
             box.Text = "Enter Seed";
             DialogResult r = box.ShowDialog();
             if (r == DialogResult.OK)
@@ -193,7 +210,7 @@ namespace AugmentRandomiser
 
         private void giveAugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EntryBox box = new EntryBox();
+            EntryBox box = new EntryBox(this);
             box.Text = "Enter Augment Name";
             DialogResult r = box.ShowDialog(this);
             if (r == DialogResult.OK)
@@ -247,9 +264,72 @@ namespace AugmentRandomiser
             lvAugs.ExpandAll();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void ontopToggle_Tick(object sender, EventArgs e)
         {
+            this.mappings.step();        
+        }
 
+        private void evToggleTopmost(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            if (this.TopMost)
+            {
+                labelMode = false;
+                TopMost = false;
+                this.Size = oldSize;
+                this.Location = oldLocation;
+                lvAugs.Enabled = true;
+                lvAugs.Visible = true;              
+                menuStrip1.Enabled = true;
+                menuStrip1.Visible = true;
+                giveAug.Enabled = true;
+                giveAug.Visible = true;
+                this.Region.MakeInfinite();
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            }
+            else
+            {
+                oldSize = this.Size;
+                oldLocation = this.Location;
+                TopMost = true;
+                labelMode = true;
+                lvAugs.Visible = false;
+                lvAugs.Enabled = false;
+                menuStrip1.Visible = false;
+                menuStrip1.Enabled = false;
+                giveAug.Visible = false;
+                giveAug.Enabled = false;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.Size = new Size(200, 100);
+                this.Location = new Point(10, 10);
+            }
+        }
+
+        private Point oldLocation;
+        private Size oldSize;
+        private bool labelMode = false;
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (labelMode)
+            {
+                e.Graphics.SmoothingMode = SmoothingMode.None;
+                e.Graphics.Clear(Color.White);
+
+                GraphicsPath p = new GraphicsPath();
+                p.AddString(giveAug.Text, giveAug.Font.FontFamily, (int)giveAug.Font.Style, 25, new Point(0, 0), new StringFormat());
+                
+                RectangleF r = p.GetBounds();
+                this.Size = new System.Drawing.Size((int)(r.Left + r.Width + 30), (int)(r.Top + r.Height + 10));
+                Region oldRegion = this.Region;
+                this.Region = new Region(p);
+                if (oldRegion != null) oldRegion.Dispose();
+                p.Dispose();
+            }
+            else
+            {
+                e.Graphics.SmoothingMode = SmoothingMode.Default;
+                base.OnPaint(e);
+            }
         }
     }
 }

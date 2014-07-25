@@ -1,0 +1,15 @@
+﻿###########################################################################
+# Valid keybinds are of form <KeyCode>:<Action>
+# Valid actions are:
+#	NextAug			- Give The aug on the bottom button, randomly select next aug
+#   ResetAugs		- Reset the aug list
+#   ExpandAugs		- Expand the aug list
+#   CollapsAugs		- Collpase the aug list to root augs
+#   SetSeed			- Set the random seed (also resets)
+#   Cheat			- Give aug by name (use names shown in the list)
+#   ToggleTopmost   - Toggle topmost & label mode
+###########################################################################
+
+F9:NextAug
+F11:ResetAugs
+F12:ToggleTopmost

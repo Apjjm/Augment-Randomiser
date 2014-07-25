@@ -12,8 +12,10 @@ namespace AugmentRandomiser
     public partial class EntryBox : Form
     {
         private string resultText = "";
-        public EntryBox()
+        public EntryBox(Form parent)
         {
+            this.Parent = parent;
+            this.TopMost = parent.TopMost;
             InitializeComponent();
         }
 

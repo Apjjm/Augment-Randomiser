@@ -1,6 +1,6 @@
 ﻿namespace AugmentRandomiser
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node1");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node2");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node3");
@@ -37,15 +38,16 @@
             treeNode2,
             treeNode3,
             treeNode4});
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lvAugs = new System.Windows.Forms.TreeView();
             this.giveAug = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.giveAugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.giveAugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keysUpdate = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,15 +111,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(309, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // setSeedToolStripMenuItem
             // 
@@ -128,13 +121,13 @@
             this.setSeedToolStripMenuItem.Text = "Seed";
             this.setSeedToolStripMenuItem.Click += new System.EventHandler(this.setSeedToolStripMenuItem_Click);
             // 
-            // giveAugToolStripMenuItem
+            // expandToolStripMenuItem
             // 
-            this.giveAugToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.giveAugToolStripMenuItem.Name = "giveAugToolStripMenuItem";
-            this.giveAugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.giveAugToolStripMenuItem.Text = "Cheat";
-            this.giveAugToolStripMenuItem.Click += new System.EventHandler(this.giveAugToolStripMenuItem_Click);
+            this.expandToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.expandToolStripMenuItem.Text = "Expand";
+            this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
             // collapseToolStripMenuItem
             // 
@@ -144,15 +137,28 @@
             this.collapseToolStripMenuItem.Text = "Collapse";
             this.collapseToolStripMenuItem.Click += new System.EventHandler(this.collapseToolStripMenuItem_Click);
             // 
-            // expandToolStripMenuItem
+            // resetToolStripMenuItem
             // 
-            this.expandToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.expandToolStripMenuItem.Text = "Expand";
-            this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
+            this.resetToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
-            // Form1
+            // giveAugToolStripMenuItem
+            // 
+            this.giveAugToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.giveAugToolStripMenuItem.Name = "giveAugToolStripMenuItem";
+            this.giveAugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.giveAugToolStripMenuItem.Text = "Cheat";
+            this.giveAugToolStripMenuItem.Click += new System.EventHandler(this.giveAugToolStripMenuItem_Click);
+            // 
+            // keysUpdate
+            // 
+            this.keysUpdate.Interval = 25;
+            this.keysUpdate.Tick += new System.EventHandler(this.ontopToggle_Tick);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -163,10 +169,10 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(325, 40000);
-            this.MinimumSize = new System.Drawing.Size(325, 100);
-            this.Name = "Form1";
-            this.Text = "Augment Randomiser";
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "MainForm";
+            this.Text = "Aug Randomiser";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -185,6 +191,7 @@
         private System.Windows.Forms.ToolStripMenuItem giveAugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem collapseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
+        private System.Windows.Forms.Timer keysUpdate;
     }
 }
 

@@ -81,6 +81,8 @@
             this.Controls.Add(this.giveAug);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EntryBox";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EntryBox";
             this.Load += new System.EventHandler(this.EntryBox_Load);
             this.Shown += new System.EventHandler(this.EntryBox_Shown);

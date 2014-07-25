@@ -27,12 +27,14 @@ namespace AugmentRandomiser
                 allAugments.Clear();
                 ownedAugments.Clear();
                 nextAugments.Clear();
-                StreamReader reader = new StreamReader(path);
-                while (!reader.EndOfStream)
+                using (StreamReader reader = new StreamReader(path))
                 {
-                    string line = reader.ReadLine().Trim();
-                    if (!line.StartsWith("#") && line.Length > 0)
-                        allAugments.Add(Augment.fromLine(line));
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine().Trim();
+                        if (!line.StartsWith("#") && line.Length > 0)
+                            allAugments.Add(Augment.fromLine(line));
+                    }
                 }
             }
             else
