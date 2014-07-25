@@ -1,7 +1,6 @@
 Augment-Randomiser
 ==================
 
-#About
 A quick and dirty augment randomiser with a crude overlay ability for use with deus ex games. The randomiser will tell you what upgrades to get when (Don't worry - it will only tell you ones you can actually buy!). For use in fun runs for All missions% and perhaps other categories.
 
 #How To Use
